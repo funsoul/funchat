@@ -1,3 +1,5 @@
+<?php
+
 //创建websocket服务器对象，监听0.0.0.0:9502端口
 $ws = new swoole_websocket_server("0.0.0.0", 9502);
 
@@ -14,9 +16,9 @@ $ws->on('message', function ($ws, $frame) {
 //var_dump($GLOBALS['fd']);
 //exit;
     foreach($GLOBALS['fd'] as $aa){
-        foreach($aa as $i){
-            $ws->push($i,$msg);
-        }
+        
+            $ws->push($aa[0],$msg);
+        
     }
    // $ws->push($frame->fd, "server: {$frame->data}");
     // $ws->push($frame->fd, "server: {$frame->data}");
