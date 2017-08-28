@@ -13,12 +13,21 @@ $ws->on('open', function ($ws, $request) {
         $redis->setex($request->fd, 3600, 'fd');
     }
     $fds = $redis->keys('*');
-    var_dump(['open' => $fds]);
-    $ws->push($request->fd, "hello, welcome");
+
+    $userList = [];
+    foreach ($fds as $fd) {
+        $userList[] = [
+            'fd' =>  $fd,
+            'username' =>  $redis->get($fd)
+        ];
+    }
+
+    $ws->push($request->fd, json_encode(['userList' => $userList]));
 });
 
 //监听WebSocket消息事件
 $ws->on('message', function ($ws, $frame) {
+    var_dump(['message--ws: ' => $ws]);
     global $redis;
     $data = json_decode($frame->data,true);
     $user    = $data['from'];

@@ -27,6 +27,9 @@
         */
         if(websocket.readyState == 1) {
             msg.innerHTML = 'ok!';
+            if(evt.data) {
+                console.log(evt.data);
+            }
         }else{
             msg.innerHTML = 'no conn!';
         }
@@ -46,8 +49,15 @@
 
     //onmessage 监听服务器数据推送
     websocket.onmessage = function (evt) {
+        if(evt.data) {
+            data = JSON.parse(evt.data);
+            if(data == 'userList') {
+                
+            }
+            console.log(data);
+        }
         msg.innerHTML += evt.data +'<br>';
-//        console.log('Retrieved data from server: ' + evt.data);
+
     };
 //监听连接错误信息
 //    websocket.onerror = function (evt, e) {
