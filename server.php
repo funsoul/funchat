@@ -8,32 +8,35 @@ $ws = new swoole_websocket_server("0.0.0.0", 29501);
 //监听WebSocket连接打开事件
 $ws->on('open', function ($ws, $request) {
     global $redis;
-    $redis->lpush("fd", $request->fd);
-
-    $arList = $redis->lrange("fd",0,5);
-    print_r($arList);
-
-//    var_dump($request);
-    $ws->push($request->fd, "hello, welcome\n");
+//    $redis->flushAll(); # 清空所有数据库
+    if(!$redis->exists($request->fd)){
+        $redis->setex($request->fd, 3600, 'fd');
+    }
+    $fds = $redis->keys('*');
+    var_dump(['open' => $fds]);
+    $ws->push($request->fd, "hello, welcome");
 });
 
 //监听WebSocket消息事件
 $ws->on('message', function ($ws, $frame) {
-    $msg =  'from'.$frame->fd.":{$frame->data}\n";
-var_dump($GLOBALS['fds']);
-//exit;
-    foreach($GLOBALS['fds'] as $aa){
-        $ws->push($aa,$msg);
+    global $redis;
+    $data = json_decode($frame->data,true);
+    $user    = $data['from'];
+    $content = $data['body'];
+    $msg = $user." : ".$content;
+//var_dump($data);
+    $fds = $redis->keys('*');
+    foreach($fds as $fd){
+        $ws->push($fd,$msg);
     }
-   // $ws->push($frame->fd, "server: {$frame->data}");
-    // $ws->push($frame->fd, "server: {$frame->data}");
 });
 
 //监听WebSocket连接关闭事件
 $ws->on('close', function ($ws, $fd) {
-    $tempArr = array_flip($GLOBALS['fds']);
-    unset($tempArr[$fd]);
-    $GLOBALS['fds'] = array_flip($tempArr);
+    global $redis;
+    $redis->delete($fd);
+    $fds = $redis->keys('*');
+    var_dump(['after delete: ' =>$fds]);
     echo "client-{$fd} is closed\n";
 });
 
