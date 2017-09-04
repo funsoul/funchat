@@ -28,15 +28,21 @@ $ws->on('open', function ($ws, $request) {
 //监听WebSocket消息事件
 $ws->on('message', function ($ws, $frame) {
     var_dump(['message--ws: ' => $ws]);
+    var_dump(['message--frame: ' => $frame]);
     global $redis;
     $data = json_decode($frame->data,true);
     $user    = $data['from'];
     $content = $data['body'];
-    $msg = $user." : ".$content;
-//var_dump($data);
+    $toUser  = $data['to'];
+    $msg = json_encode(['msg' => $user." : ".$content]);
+var_dump($data);
     $fds = $redis->keys('*');
-    foreach($fds as $fd){
-        $ws->push($fd,$msg);
+    if(isset($toUser) && !empty($toUser)){ // 私聊
+        $ws->push($toUser,$msg);
+    }else{// 群发
+        foreach($fds as $fd){
+            $ws->push($fd,$msg);
+        }
     }
 });
 
