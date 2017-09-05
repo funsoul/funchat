@@ -1,9 +1,11 @@
 <?php
 
-require_once "RedisDB.php";
+require_once 'database/RedisDB.php';
 
+$ServerConfig = require 'config/server.php';
 //创建websocket服务器对象，监听0.0.0.0:9502端口
-$ws = new swoole_websocket_server("0.0.0.0", 29501);
+
+$ws = new swoole_websocket_server($ServerConfig['localhost']['host'], $ServerConfig['localhost']['port']);
 
 //监听WebSocket连接打开事件
 $ws->on('open', function ($ws, $request) {
@@ -12,6 +14,17 @@ $ws->on('open', function ($ws, $request) {
     if(!$redis->exists($request->fd)){
         $redis->setex($request->fd, 3600, 'fd');
     }
+
+    $users = array(
+        'name' => 'cjq',
+        'fd' => 1,
+        'status'=> 1,
+    );
+//    $redis -> hmset('cjqinfo', $arr);
+//
+//    var_dump($redis->hmget('cjqinfo'));
+//    echo $redis->hget('cjqinfo','hobby')
+
     $fds = $redis->keys('*');
 
     $userList = [];
@@ -35,7 +48,9 @@ $ws->on('message', function ($ws, $frame) {
     $content = $data['body'];
     $toUser  = $data['to'];
     $msg = json_encode(['msg' => $user." : ".$content]);
-var_dump($data);
+
+    $redis->set($frame->fd,$user); // 设置用户名
+
     $fds = $redis->keys('*');
     if(isset($toUser) && !empty($toUser)){ // 私聊
         $ws->push($toUser,$msg);
