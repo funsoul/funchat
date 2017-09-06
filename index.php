@@ -82,8 +82,8 @@
         var text = document.getElementById('content').value;
         //向服务器发送数据
         websocket.send(JSON.stringify({
-          from: 'jack',
-          body:text
+          fromWho: 'jack',
+          content:text
         }));
       }
       //监听连接关闭
