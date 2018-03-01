@@ -7,48 +7,37 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>FunChat</title>
 		<link rel="stylesheet" type="text/css" href="static/css/chat.css" />
-
 		<script src="static/js/jquery.min.js"></script>
-		<script src="static/js/flexible.js"></script>
+		<script src="static/js/chat.js"></script>
 	</head>
 
 	<body>
-        <div class="left" style="position: fixed;left: 100px;top: 200px;">
+        <div style="display: block" id="LoginBox">
+            <div class="row1">
+                登录
+            </div>
+            <div class="row">
+                用户名: <span class="inputBox">
+                    <input type="text" id="userName" placeholder="请输入昵称..." />
+            </div>
+            <div class="row">
+                <a href="#" id="loginbtn" onclick="login()">登录</a>
+            </div>
+        </div>
+        <div id="chatBox" style="display: none">
+          <div class="left" style="position: fixed;left: 100px;top: 200px;">
             <p>Online</p>
             <ul id="userList"></ul>
+          </div>
+          <ul class="center" id="chat"></ul>
+          <input type="text" id="content" name="content" style="width: 200px"><br>
+          <span id="currentUser"></span>
+          <button id="sendMsg" onclick="sendMsg()">发送</button>
         </div>
-		<header class="header">
-			<a class="back" href="javascript:history.back()"></a>
-			<h5 class="tit">FunChat</h5>
-			<div class="right">资料</div>
-		</header>
-		<div class="message">
-			<div class="send">
-				<div class="time">05/22 06:30</div>
-				<div class="msg">
-					<img src="static/images/touxiang.png" alt="" />
-					<p><i class="msg_input"></i>1</p>
-				</div>
-			</div>
-			<div class="show">
-				<div class="time">05/22 06:30</div>
-				<div class="msg">
-					<img src="static/images/touxiangm.png" alt="" />
-					<p><i class="msg_input"></i>2</p>
-				</div>
-			</div>
-		</div>
-		<div class="footer">
-			<img src="static/images/hua.png" alt="" />
-			<img src="static/images/xiaolian.png" alt="" />
-			<input id="content" type="text"  />
-			<p id="sendBtn" onclick="sendMsg()">发送</p>
-		</div>
-	<script src="static/js/chat.js" type="text/javascript" charset="utf-8"></script>
     <script>
       <?php
       $websocketConfig = require 'config/server.php';
-      $wsServer = 'ws://'.$websocketConfig['websocket']['host'].':'.$websocketConfig['websocket']['port'];
+      $wsServer = 'ws://'.$websocketConfig['WEBSOCKET']['HOST'].':'.$websocketConfig['WEBSOCKET']['PORT'];
       ?>
       var wsServer = "<?php echo $wsServer;?>";
       var userList = document.getElementById('userList');
@@ -70,41 +59,13 @@
           usrList.innerHTML = 'no conn!';
         }
       };
-
-//      function reply(v) {
-//        var toUserId = v.id;
-//        var toUserName = v.innerHTML;
-//        document.getElementById('content').innerHTML = '回复 '+ toUserName;
-//        document.getElementById('toUserId').value = toUserId;
-//      }
-
-      function sendMsg(){
-        var text = document.getElementById('content').value;
-        //向服务器发送数据
-        websocket.send(JSON.stringify({
-          fromWho: 'jack',
-          content:text
-        }));
-      }
       //监听连接关闭
       websocket.onclose = function (evt) {
         console.log("Disconnected");
       };
-
       //onmessage 监听服务器数据推送
       websocket.onmessage = function (evt) {
-        if(evt.data) {
-          data = JSON.parse(evt.data);
-          if(data.userList) {
-            for(var i=0;i<data.userList.length;i++){
-              userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="'+ data.userList[i].fd +'">' + data.userList[i].username + '</a></li>';
-            }
-          }
-          if(data.msg) {
-            send("../static/images/touxiang.png",data.msg)
-          }
-          console.log(data);
-        }
+        receive(evt);
       };
       //监听连接错误信息
       websocket.onerror = function (evt, e) {

@@ -1,30 +1,38 @@
-/*发送消息*/
-function send(headSrc,str){
-	var html="<div class='send'><div class='msg'><img src="+headSrc+" />"+
-	"<p><i class='msg_input'></i>"+str+"</p></div></div>";
-	upView(html);
+//      function reply(v) {
+//        var toUserId = v.id;
+//        var toUserName = v.innerHTML;
+//        document.getElementById('content').innerHTML = '回复 '+ toUserName;
+//        document.getElementById('toUserId').value = toUserId;
+//      }
+
+function login() {
+	$('#LoginBox').css('display','none');
+	$('#chatBox').css('display','block');
+  var userName = $('#userName').val();
+	$('#currentUser').text(userName);
 }
-/*接受消息*/
-function show(headSrc,str){
-	var html="<div class='show'><div class='msg'><img src="+headSrc+" />"+
-	"<p><i class='msg_input'></i>"+str+"</p></div></div>";
-	upView(html);
+
+function sendMsg(){
+  var text = document.getElementById('content').value;
+  var user = $('#currentUser').text();
+  //向服务器发送数据
+  websocket.send(JSON.stringify({
+    fromWho: user,
+    content:text
+  }));
 }
-/*更新视图*/
-function upView(html){
-	$('.message').append(html);
-	$('body').animate({scrollTop:$('.message').outerHeight()-window.innerHeight},200)
+
+function receive(evt) {
+  if(evt.data) {
+    data = JSON.parse(evt.data);
+    if(data.userList) {
+      for(var i=0;i<data.userList.length;i++){
+        userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="'+ data.userList[i].fd +'">' + data.userList[i].username + '</a></li>';
+      }
+    }
+    if(data.content) {
+      $('#chat').append('<li>'+ data.fromWho + ':' + data.content +'</li>');
+    }
+    console.log(data);
+  }
 }
-function sj(){
-	return parseInt(Math.random()*10)
-}
-$(function(){
-	$('.footer').on('keyup','input',function(){
-		if($(this).val().length>0){
-			$(this).next().css('background','#114F8E').prop('disabled',true);
-		
-		}else{
-			$(this).next().css('background','#ddd').prop('disabled',false);
-		}
-	})
-})

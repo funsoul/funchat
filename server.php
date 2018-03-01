@@ -12,7 +12,7 @@ $ws->on('open', function ($ws, $request) {
 //    $redis->flushAll(); # 清空所有数据库
 
     $userList = getOnlineUsers();
-    $ws->push($request->fd, pack(['userList' => $userList]));
+    $ws->push($request->fd, packData(['userList' => $userList]));
 });
 
 //监听WebSocket消息事件
@@ -20,7 +20,7 @@ $ws->on('message', function ($ws, $frame) {
     dd('message--ws:',$ws);
     dd('message--frame: :',$frame);
 
-    $data = unpack($frame->data);
+    $data = unpackData($frame->data);
     switch ($data['action']) {
         case 'login':     // 登录
             $user['fromWho']    = $data['fromWho'];
@@ -38,14 +38,14 @@ $ws->on('message', function ($ws, $frame) {
         case 'dispatch':  // 群聊
             $fromWho    = $data['fromWho'];
             $content    = $data['content'];
-            $msg = pack(['msg' => $fromWho." : ".$content]);
+            $msg = packData(['msg' => $fromWho." : ".$content]);
             resp($data['action'],$ws,$frame->fd,$msg);
             break;
         case 'single':    // 私聊
             $fromWho    = $data['fromWho'];
             $content    = $data['content'];
             $toWho      = $data['toWho'];
-            $msg = pack(['msg' => $fromWho." : ".$content]);
+            $msg = packData(['msg' => $fromWho." : ".$content]);
             resp($data['action'],$ws,$toWho,$msg);
             break;
         default:
@@ -116,11 +116,11 @@ function clearUser() {
 
 }
 
-function pack($data) {
+function packData($data) {
     return json_encode($data);
 }
 
-function unpack($data) {
+function unpackData($data) {
     if(isset($data) && !empty($data)) {
         return json_decode($data,true);
     }else{

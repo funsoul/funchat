@@ -1,12 +1,13 @@
 <?php
-$config = [
-    'localhost' => [
-        'host' => '0.0.0.0',
-        'port' => 29501
+return [
+    'LOCALHOST' => [
+        'HOST' => '0.0.0.0',
+        'PORT' => 29501,
+        'WORKER_NUM' => 2,
+        'IS_DAEMON' => false
     ],
-    'websocket' => [
-        'host' => '119.29.83.106',
-        'port' => 29501
+    'WEBSOCKET' => [
+        'HOST' => '119.29.83.106',
+        'PORT' => 29501
     ]
 ];
-return $config;
