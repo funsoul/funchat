@@ -1,1 +1,3 @@
-# A swoole-based open sourse chat room 
+# funchat
+A chat room based on swoole.
+
