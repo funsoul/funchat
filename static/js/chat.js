@@ -3,13 +3,13 @@ function reply(v) {
 	var toUserName = v.innerHTML;
 	$('#singleChatBox').css('display','block');
 	$('#singleCurrentUser').attr('user-id',toUserId);
-	$('#singleCurrentUser').text('回复 '+ toUserName);
+	$('#singleCurrentUser').text('Reply: '+ toUserName);
 }
 
 function login() {
 	$('#LoginBox').css('display','none');
 	$('#chatBox').css('display','block');
-  var userName = $('#userName').val();
+  var userName = $('#Account').val();
 	$('#currentUser').text(userName);
   websocket.send(JSON.stringify({
 		type: 1,

@@ -12,34 +12,46 @@
 	</head>
 
 	<body>
-        <div style="display: block" id="LoginBox">
-            <div class="row1">
-                登录
-            </div>
-            <div class="row">
-                用户名: <span class="inputBox">
-                    <input type="text" id="userName" placeholder="请输入昵称..." />
-            </div>
-            <div class="row">
-                <a href="#" id="loginbtn" onclick="login()">登录</a>
-            </div>
+    <div class="content">
+      <div class="login-box" id="LoginBox">
+        <div class="title">
+          Welcome to FunChat!
         </div>
-        <div id="chatBox" style="display: none">
-          <div class="left" style="position: fixed;left: 100px;top: 200px;">
-            <p>Online</p>
-            <ul id="userList"></ul>
-          </div>
+        <div class="logInput">
+          <span>Account</span> <span class="inputBox"><input type="text" id="Account" placeholder="please enter a nickname ..." /></span>
+        </div>
+        <div class="logBtn">
+          <button href="#" id="loginbtn" onclick="login()">Log in!</button>
+        </div>
+      </div>
+      <div id="chatBox" class="chat-box">
+        <div class="title">
+          FunChat
+        </div>
+        <div class="list-box">
+          <p>Online</p>
+          <ul id="userList"></ul>
+        </div>
+        <div class="chat-container">
           <ul class="center" id="chat"></ul>
-          <input type="text" id="content" name="content" style="width: 100px"><br>
+        </div>
+        <div class="send-container">
           <span id="currentUser"></span>
-          <button id="sendMsg" onclick="sendMsg(2)">发送</button>
+          <span><input class="content" type="text" id="content" name="content"></span>
+          <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send!</button></span>
         </div>
-        <div id="singleChatBox" style="display: none;position: fixed;right: 100px;top: 200px;">
-          <ul class="right" id="singleChat"></ul>
-          <input type="text" id="singleContent" name="singleContent" style="width: 100px"><br>
+      </div>
+      <div id="singleChatBox" class="right-box">
+        <div class="chat-container">
+          <ul class="center" id="singleChat"></ul>
+        </div>
+        <div class="send-container">
           <span id="singleCurrentUser" user-id=""></span>
-          <button id="sendMsg" onclick="sendMsg(3)">发送</button>
+          <span><input type="text" id="singleContent" name="singleContent" style="width: 100px"></span>
+          <span><button id="sendMsg" onclick="sendMsg(3)">send!</button></span>
         </div>
+      </div>
+    </div>
     <script>
       <?php
       $websocketConfig = require 'config/server.php';
