@@ -30,9 +30,15 @@
             <ul id="userList"></ul>
           </div>
           <ul class="center" id="chat"></ul>
-          <input type="text" id="content" name="content" style="width: 200px"><br>
+          <input type="text" id="content" name="content" style="width: 100px"><br>
           <span id="currentUser"></span>
-          <button id="sendMsg" onclick="sendMsg()">发送</button>
+          <button id="sendMsg" onclick="sendMsg(2)">发送</button>
+        </div>
+        <div id="singleChatBox" style="display: none;position: fixed;right: 100px;top: 200px;">
+          <ul class="right" id="singleChat"></ul>
+          <input type="text" id="singleContent" name="singleContent" style="width: 100px"><br>
+          <span id="singleCurrentUser" user-id=""></span>
+          <button id="sendMsg" onclick="sendMsg(3)">发送</button>
         </div>
     <script>
       <?php
