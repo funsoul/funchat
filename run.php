@@ -2,21 +2,17 @@
 require_once ('./base/WebSocket.php');
 require_once ('./lib/function/Utils.php');
 
-const MSG_TYPE_LOGIN = 1;
-const MSG_TYPE_DISPATCH = 2;
-const MSG_TYPE_SINGLE = 3;
-const MSG_TYPE_CLOSE = 4;
-const MSG_TYPE_OFFLINE = 5;
-
 class WebSocketServer extends WebSocket
 {
     private $_server_config = [];
     private $_db_config = [];
+    private $_constants = [];
     private $redis;
     public function __construct()
     {
         $this->_server_config = require 'config/server.php';
         $this->_db_config = require 'config/database.php';
+        $this->_constants = require 'config/constants.php';
 
         $this->redis = new Redis();
         $this->redis->connect(
@@ -77,7 +73,7 @@ class WebSocketServer extends WebSocket
         if(!empty($userName)){
             $this->respMessage([
                 'server' => $server,
-                'type' => MSG_TYPE_CLOSE,
+                'type' => $this->_constants['MSG']['TYPE']['CLOSE'],
                 'fd' => $fd,
                 'depkg' => $depkg,
                 'username' => $userName
@@ -103,25 +99,25 @@ class WebSocketServer extends WebSocket
     private function respMessage($data)
     {
         switch ($data['type']){
-            case MSG_TYPE_LOGIN:
+            case $this->_constants['MSG']['TYPE']['LOGIN']:
                 $this->respUserList($data);
                 break;
-            case MSG_TYPE_DISPATCH:
+            case $this->_constants['MSG']['TYPE']['DISPATCH']:
                 foreach ($data['depkg'] as $fd => $value){
                     $data['server']->push($fd, $data['frame']->data);
                 }
                 break;
-            case MSG_TYPE_SINGLE:
+            case $this->_constants['MSG']['TYPE']['SINGLE']:
                 $dedata= json_decode($data['frame']->data,true);
                 if($data['server']->exist($dedata['toWho'])){
                     $data['server']->push($dedata['toWho'], $data['frame']->data);
                 }else{
-                    $res = json_encode(['type' => MSG_TYPE_OFFLINE, 'content' => $dedata['toWho']]);
+                    $res = json_encode(['type' => $this->_constants['MSG']['TYPE']['OFFLINE'], 'content' => $dedata['toWho']]);
                     $data['server']->push($data['fd'], $res);
                 }
                 break;
-            case MSG_TYPE_CLOSE:
-                $res = json_encode(['type' => MSG_TYPE_CLOSE, 'content' => $data['username']]);
+            case $this->_constants['MSG']['TYPE']['CLOSE']:
+                $res = json_encode(['type' => $this->_constants['MSG']['TYPE']['CLOSE'], 'content' => $data['username']]);
                 foreach ($data['depkg'] as $fd => $username){
                     $data['server']->push($fd, $res);
                 }
