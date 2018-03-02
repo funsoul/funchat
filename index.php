@@ -42,9 +42,6 @@
         </div>
       </div>
       <div id="singleChatBox" class="right-box">
-        <div class="chat-container">
-          <ul class="center" id="singleChat"></ul>
-        </div>
         <div class="send-container">
           <span id="singleCurrentUser" user-id=""></span>
           <span><input type="text" id="singleContent" name="singleContent" style="width: 100px"></span>

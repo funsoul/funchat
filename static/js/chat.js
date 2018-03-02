@@ -49,8 +49,10 @@ function receive(evt) {
     	if(data.type == 2){
         $('#chat').append('<li>'+ data.fromWho + ' : ' + data.content +'</li>');
 			}else if(data.type == 3){
-        $('#chat').append('<li style="color: red">[私聊]'+ data.fromWho + ' : ' + data.content +'</li>');
-			}
+        $('#chat').append('<li style="color: red">[Private]'+ data.fromWho + ' : ' + data.content +'</li>');
+			}else if(data.type == 4){
+        $('#chat').append('<li>' + data.content + ' left the room.</li>');
+      }
     }
     console.log(data);
   }

@@ -6,6 +6,7 @@ require_once ('./lib/function/Utils.php');
 const MSG_TYPE_LOGIN = 1;
 const MSG_TYPE_DISPATCH = 2;
 const MSG_TYPE_SINGLE = 3;
+const MSG_TYPE_CLOSE = 4;
 
 class WebSocketServer extends WebSocket
 {
@@ -56,32 +57,62 @@ class WebSocketServer extends WebSocket
         $enpkg = json_encode($depkg);
         $this->redis->set("fd", $enpkg);
 
+        $this->respMessage([
+            'server' => $server,
+            'type' => $data['type'],
+            'fd' => $frame->fd,
+            'depkg' => $depkg,
+            'frame' => $frame
+        ]);
+    }
+
+    public function close(swoole_websocket_server $server, $fd)
+    {
+        echo "\n 连接关闭: \n" . $fd;
+        $depkg = json_decode($this->redis->get("fd"), true);
+        $userName = $depkg[$fd];
+        unset($depkg[$fd]);
+        $enpkg = json_encode($depkg);
+        $this->redis->set("fd", $enpkg);
+        $this->respMessage([
+            'server' => $server,
+            'type' => MSG_TYPE_CLOSE,
+            'fd' => $fd,
+            'depkg' => $depkg,
+            'username' => $userName
+        ]);
+    }
+
+    private function respMessage($data)
+    {
         switch ($data['type']){
             case MSG_TYPE_LOGIN:
                 $userList = [];
-                foreach ($depkg as $fd => $username){
+                foreach ($data['depkg'] as $fd => $username){
                     $userList[] = [
                         'fd' => $fd,
                         'username' => $username
                     ];
                 }
                 $res = json_encode(['userList' => $userList]);
-                $server->push($fd, $res);
+                $data['server']->push($fd, $res);
                 break;
             case MSG_TYPE_DISPATCH:
-                foreach ($depkg as $fd => $value){
-                    $server->push($fd, $frame->data);
+                foreach ($data['depkg'] as $fd => $value){
+                    $data['server']->push($fd, $data['frame']->data);
                 }
                 break;
             case MSG_TYPE_SINGLE:
-                $server->push($data['toWho'], $frame->data);
+                $dedata= json_decode($data['frame']->data,true);
+                $data['server']->push($dedata['toWho'], $data['frame']->data);
+                break;
+            case MSG_TYPE_CLOSE:
+                $res = json_encode(['type' => MSG_TYPE_CLOSE, 'content' => $data['username']]);
+                foreach ($data['depkg'] as $fd => $username){
+                    $data['server']->push($fd, $res);
+                }
                 break;
         }
-    }
-
-    public function close(swoole_websocket_server $server, $fd)
-    {
-        echo "\n 连接关闭: \n" . $fd;
     }
 }
 
