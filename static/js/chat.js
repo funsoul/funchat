@@ -51,7 +51,10 @@ function receive(evt) {
 			}else if(data.type == 3){
         $('#chat').append('<li style="color: red">[Private]'+ data.fromWho + ' : ' + data.content +'</li>');
 			}else if(data.type == 4){
-        $('#chat').append('<li>' + data.content + ' left the room.</li>');
+        $('#chat').append('<li style="color: orange">' + data.content + ' left the room.</li>');
+      }else if(data.type == 5){
+			  var msg = $('#singleCurrentUser').text() + ' [Failed to send : maybe your friend have been offline.]';
+        $('#chat').append('<li style="color: blue;">' + msg + '</li>');
       }
     }
     console.log(data);

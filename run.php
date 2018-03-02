@@ -2,11 +2,11 @@
 require_once ('./base/WebSocket.php');
 require_once ('./lib/function/Utils.php');
 
-
 const MSG_TYPE_LOGIN = 1;
 const MSG_TYPE_DISPATCH = 2;
 const MSG_TYPE_SINGLE = 3;
 const MSG_TYPE_CLOSE = 4;
+const MSG_TYPE_OFFLINE = 5;
 
 class WebSocketServer extends WebSocket
 {
@@ -104,7 +104,12 @@ class WebSocketServer extends WebSocket
                 break;
             case MSG_TYPE_SINGLE:
                 $dedata= json_decode($data['frame']->data,true);
-                $data['server']->push($dedata['toWho'], $data['frame']->data);
+                if($data['server']->exist($dedata['toWho'])){
+                    $data['server']->push($dedata['toWho'], $data['frame']->data);
+                }else{
+                    $res = json_encode(['type' => MSG_TYPE_OFFLINE, 'content' => $dedata['toWho']]);
+                    $data['server']->push($data['fd'], $res);
+                }
                 break;
             case MSG_TYPE_CLOSE:
                 $res = json_encode(['type' => MSG_TYPE_CLOSE, 'content' => $data['username']]);
