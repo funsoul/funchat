@@ -7,14 +7,18 @@ function reply(v) {
 }
 
 function login() {
-	$('#LoginBox').css('display','none');
-	$('#chatBox').css('display','block');
   var userName = $('#Account').val();
-	$('#currentUser').text(userName);
-  websocket.send(JSON.stringify({
-		type: 1,
-    fromWho: userName
-  }));
+  if(userName.length == 0){
+    alert('please enter your nickname!');
+  }else{
+    $('#LoginBox').css('display','none');
+    $('#chatBox').css('display','block');
+    $('#currentUser').text(userName);
+    websocket.send(JSON.stringify({
+      type: 1,
+      fromWho: userName
+    }));
+  }
 }
 
 function sendMsg(type){
@@ -39,6 +43,7 @@ function receive(evt) {
   if(evt.data) {
     data = JSON.parse(evt.data);
     if(data.userList) {
+      userList.innerHTML = '';
       for(var i=0;i<data.userList.length;i++){
       	if(data.userList[i].username.length > 1){
           userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="'+ data.userList[i].fd +'">' + data.userList[i].username + '</a></li>';

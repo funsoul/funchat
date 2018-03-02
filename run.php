@@ -74,28 +74,37 @@ class WebSocketServer extends WebSocket
         unset($depkg[$fd]);
         $enpkg = json_encode($depkg);
         $this->redis->set("fd", $enpkg);
-        $this->respMessage([
-            'server' => $server,
-            'type' => MSG_TYPE_CLOSE,
-            'fd' => $fd,
-            'depkg' => $depkg,
-            'username' => $userName
-        ]);
+        if(!empty($userName)){
+            $this->respMessage([
+                'server' => $server,
+                'type' => MSG_TYPE_CLOSE,
+                'fd' => $fd,
+                'depkg' => $depkg,
+                'username' => $userName
+            ]);
+        }
+    }
+
+    private function respUserList($data)
+    {
+        $userList = [];
+        foreach ($data['depkg'] as $fd => $username){
+            $userList[] = [
+                'fd' => $fd,
+                'username' => $username
+            ];
+        }
+        $res = json_encode(['userList' => $userList]);
+        foreach ($data['depkg'] as $fd => $username){
+            $data['server']->push($fd, $res);
+        }
     }
 
     private function respMessage($data)
     {
         switch ($data['type']){
             case MSG_TYPE_LOGIN:
-                $userList = [];
-                foreach ($data['depkg'] as $fd => $username){
-                    $userList[] = [
-                        'fd' => $fd,
-                        'username' => $username
-                    ];
-                }
-                $res = json_encode(['userList' => $userList]);
-                $data['server']->push($fd, $res);
+                $this->respUserList($data);
                 break;
             case MSG_TYPE_DISPATCH:
                 foreach ($data['depkg'] as $fd => $value){
@@ -116,6 +125,7 @@ class WebSocketServer extends WebSocket
                 foreach ($data['depkg'] as $fd => $username){
                     $data['server']->push($fd, $res);
                 }
+                $this->respUserList($data);
                 break;
         }
     }
