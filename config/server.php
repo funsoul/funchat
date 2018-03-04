@@ -4,7 +4,7 @@ return [
         'HOST' => '0.0.0.0',
         'PORT' => 29501,
         'WORKER_NUM' => 2,
-        'IS_DAEMON' => true
+        'IS_DAEMON' => false
     ],
     'WEBSOCKET' => [
         'HOST' => '119.29.83.106',

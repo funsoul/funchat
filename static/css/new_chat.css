@@ -1,0 +1,194 @@
+@import './reset.css';
+
+.content {
+    margin-top: 100px;
+    width: 500px;
+    border: 1px solid #aaaaaa;
+    border-radius: 20px;
+    opacity: 0.7;
+    color: #000;
+    margin: 100px auto;
+    padding-left: 25px;
+    padding-bottom: 30px;
+    box-shadow:2px 2px 3px #aaaaaa;
+}
+
+.login-box {
+    display: block;
+    height: 200px;
+}
+
+.login-box .title,
+.chat-box .title{
+    margin: 40px auto 30px;
+    color: #000;
+    text-align: center;
+    font-size: 32px;
+}
+
+.login-box .logInput{
+    margin: 0 auto;
+    font-size: 28px;
+    margin-right: 25px;
+}
+
+.login-box .inputBox input{
+    font-size: 28px;
+    padding-left: 20px;
+}
+
+.login-box .logBtn{
+    width: 50%;
+    margin: 40px auto 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-box .logBtn button{
+    font-size: 28px;
+    border-radius: 10px;
+    padding:5px;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    box-shadow: 2px 2px 3px #aaaaaa;
+}
+
+.chat-box {
+    display: none;
+    position: relative;
+}
+
+.chat-box .title{
+    margin-bottom: 24px;
+}
+
+.chat-box .list-box{
+    position: absolute;
+    right: 20px;
+    top: 60px;
+    width: 150px;
+    height: 260px;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+.chat-box .list-box p,
+.chat-container p{
+    font-size: 20px;
+    text-align: center;
+    margin: 15px 0 15px 0;
+}
+
+.chat-box .list-box #userList{
+    font-size: 18px;
+    padding-left: 15px;
+}
+
+.chat-box .list-box #userList li:nth-child(even){
+    color: blue;
+}
+
+.chat-box .list-box::-webkit-scrollbar,
+.chat-box .chat-container::-webkit-scrollbar{
+    display:none;
+}
+
+.chat-box .chat-container{
+    width: 325px;
+    height: 150px;
+    border: 1px solid #efefef;
+    border-radius: 10px;
+    overflow-y: scroll;
+}
+
+.chat-box .chat-container #chat{
+    font-size: 20px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+}
+
+.chat-box .chat-container #chat li{
+    margin: 10px 0 10px 0;
+}
+
+.chat-box .chat-container #chat li:nth-child(even){
+    color: blue;
+}
+
+.send-container{
+    width: 325px;
+    height: 90px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.send-container #currentUser{
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.send-container .input input{
+    position: absolute;
+    width: 250px;
+    font-size: 20px;
+    left: 50px;
+}
+
+.send-container .right{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.send-container .right button{
+    font-size: 20px;
+}
+
+.right-box {
+    display: none;
+    font-size: 20px;
+}
+
+.single-send-container{
+    width: 325px;
+    height: 100px;
+    position: relative;
+}
+
+.right-box .single-send-container #singleCurrentUser{
+    color: red;
+    margin:0 15px 15px 0;
+    display: block;
+}
+
+.right-box .single-send-container input,
+.right-box .single-send-container button{
+    font-size: 20px;
+    position: absolute;
+}
+
+.right-box .single-send-container input{
+    left: 50px;
+    width: 250px;
+    font-size: 20px;
+}
+
+.right-box .single-send-container #sendMsg{
+    bottom: 0;
+    right: 80px;
+}
+
+.right-box .single-send-container #cancel{
+    bottom: 0;
+    right: 0;
+}
+
+.send-container .right button,
+.right-box .single-send-container #sendMsg,
+.right-box .single-send-container #cancel{
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+}

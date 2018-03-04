@@ -65,3 +65,6 @@ function receive(evt) {
     console.log(data);
   }
 }
+function cancel() {
+  $("#singleChatBox").css('display', 'none');
+}
