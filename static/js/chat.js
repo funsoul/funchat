@@ -29,6 +29,7 @@ function sendMsg(type){
     var text = document.getElementById('singleContent').value;
 	}else{
     var userId = '';
+    $("#content").attr("value","");
   }
   //向服务器发送数据
   websocket.send(JSON.stringify({
@@ -67,4 +68,7 @@ function receive(evt) {
 }
 function cancel() {
   $("#singleChatBox").css('display', 'none');
+}
+
+function empty(){
 }
