@@ -6,46 +6,57 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>FunChat</title>
-		<link rel="stylesheet" type="text/css" href="static/css/chat.css" />
+		<link rel="stylesheet" type="text/css" href="static/css/new_chat.css" />
 		<script src="static/js/jquery.min.js"></script>
 		<script src="static/js/chat.js"></script>
 	</head>
 
 	<body>
     <div class="content">
+
       <div class="login-box" id="LoginBox">
         <div class="title">
           Welcome to FunChat!
         </div>
         <div class="logInput">
-          <span>Account</span> <span class="inputBox"><input type="text" id="Account" placeholder="please enter a nickname ..." /></span>
+          <span>Account</span>
+          <span class="inputBox">
+            <input type="text" id="Account" placeholder="please enter a nickname ..."/>
+          </span>
         </div>
         <div class="logBtn">
-          <button href="#" id="loginbtn" onclick="login()">Log in!</button>
+          <button href="#" id="loginbtn" plain="true" onclick="login()">Log in!</button>
         </div>
       </div>
+
       <div id="chatBox" class="chat-box">
+
         <div class="title">
           FunChat
         </div>
         <div class="list-box">
-          <p>Online</p>
+          <p class="p">Online List</p>
           <ul id="userList"></ul>
         </div>
+
         <div class="chat-container">
+          <p class="p">Chat Record</p>
           <ul class="center" id="chat"></ul>
         </div>
+
         <div class="send-container">
           <span id="currentUser"></span>
-          <span><input class="content" type="text" id="content" name="content"></span>
-          <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send!</button></span>
+          <span class="input"><input type="text" id="content" name="content" placeholder="say something..." /></span>
+          <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send</button></span>
         </div>
+
       </div>
       <div id="singleChatBox" class="right-box">
-        <div class="send-container">
+        <div class="single-send-container">
           <span id="singleCurrentUser" user-id=""></span>
-          <span><input type="text" id="singleContent" name="singleContent" style="width: 100px"></span>
-          <span><button id="sendMsg" onclick="sendMsg(3)">send!</button></span>
+          <span><input type="text" id="singleContent" name="singleContent" placeholder="say something..." /></span>
+          <span><button id="sendMsg" onclick="sendMsg(3)">send</button></span>
+          <span><button id="cancel" onclick="cancel()">cancel</button></span>
         </div>
       </div>
     </div>
