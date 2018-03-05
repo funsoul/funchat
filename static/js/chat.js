@@ -10,6 +10,8 @@ function login() {
   var userName = $('#Account').val();
   if(userName.length == 0){
     alert('please enter your nickname!');
+  }else if(userName.length > 18){
+    alert('Nickname is too long!');
   }else{
     $('#LoginBox').css('display','none');
     $('#chatBox').css('display','block');
@@ -32,6 +34,10 @@ function sendMsg(type){
     var userId = '';
     $("#content").val('');
   }
+  if(text.length == 0) {
+    alert('Please enter content');
+    return false;
+  }
   //向服务器发送数据
   websocket.send(JSON.stringify({
 		type: type,
@@ -52,19 +58,37 @@ function receive(evt) {
 				}
       }
     }
-    if(data.content) {
-    	if(data.type == 2){
-        $('#chat').append('<li>'+ data.fromWho + ' : ' + data.content +'</li>');
-			}else if(data.type == 3){
-        $('#chat').append('<li style="color: red">[Private]'+ data.fromWho + ' : ' + data.content +'</li>');
-			}else if(data.type == 4){
+    var currentFd = $('#currentUser').attr('fd');
+    switch (data.type)
+    {
+      case 2:
+        if(data.fd == currentFd){
+          $('#chat').append('<li>'+ data.content + ' : ' + data.fromWho +'</li>');// right
+        }else{
+          $('#chat').append('<li>'+ data.fromWho + ' : ' + data.content +'</li>');// left
+        }
+        break;
+      case 3:
+        if(data.fd == currentFd){
+          $('#chat').append('<li style="color: red;">'+ data.content + ' : ' + data.fromWho +'[Private]</li>');// right
+        }else{
+          $('#chat').append('<li style="color: red;">[Private]'+ data.fromWho + ' : ' + data.content +'</li>'); // left
+        }
+        break;
+      case 4:
         $('#chat').append('<li style="color: orange">' + data.content + ' left the room.</li>');
-      }else if(data.type == 5){
-			  var msg = $('#singleCurrentUser').text() + ' [Failed to send : maybe your friend have been offline.]';
+        break;
+      case 5:
+        var msg = $('#singleCurrentUser').text() + ' [Failed to send : maybe your friend have been offline.]';
         $('#chat').append('<li style="color: blue;">' + msg + '</li>');
-      }
+        break;
+      case 6:
+        $('#currentUser').attr('fd',data.fd);
+        break;
     }
     console.log(data);
+    var chatDiv = document.getElementById('ChatContainer');
+    chatDiv.scrollTop = chatDiv.scrollHeight;
   }
 }
 function cancel() {
@@ -72,5 +96,11 @@ function cancel() {
 }
 
 function empty(){
-  $('#chat').html('');
+  var msg = "Clearing records will not be restored.\n\nReally?";
+  if (confirm(msg) == true){
+    $('#chat').html('');
+    return true;
+  }else{
+    return false;
+  }
 }

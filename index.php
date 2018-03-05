@@ -40,7 +40,7 @@
             <ul id="userList"></ul>
           </div>
 
-          <div class="chat-container">
+          <div class="chat-container" id="ChatContainer">
             <p class="p">Chat Record</p>
             <ul class="center" id="chat"></ul>
           </div>

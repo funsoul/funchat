@@ -96,21 +96,35 @@ class WebSocketServer extends WebSocket
         }
     }
 
+    private function respCurrentFdInfo($data)
+    {
+        $fd = $data['fd'];
+        $userName = $data['depkg'][$fd];
+        $res = json_encode(['fd' => $fd, 'username' => $userName,'type' => $this->_constants['MSG']['TYPE']['FD_INFO']]);
+        $data['server']->push($fd, $res);
+    }
+
     private function respMessage($data)
     {
         switch ($data['type']){
             case $this->_constants['MSG']['TYPE']['LOGIN']:
                 $this->respUserList($data);
+                $this->respCurrentFdInfo($data);
                 break;
             case $this->_constants['MSG']['TYPE']['DISPATCH']:
+                $dedata = json_decode($data['frame']->data,true);
+                $res = array_merge($dedata,['fd' => $data['fd']]);
+                $res = json_encode($res);
                 foreach ($data['depkg'] as $fd => $value){
-                    $data['server']->push($fd, $data['frame']->data);
+                    $data['server']->push($fd, $res);
                 }
                 break;
             case $this->_constants['MSG']['TYPE']['SINGLE']:
                 $dedata= json_decode($data['frame']->data,true);
+                $res = array_merge($dedata,['fd' => $data['fd']]);
+                $res = json_encode($res);
                 if($data['server']->exist($dedata['toWho'])){
-                    $data['server']->push($dedata['toWho'], $data['frame']->data);
+                    $data['server']->push($dedata['toWho'], $res);
                 }else{
                     $res = json_encode(['type' => $this->_constants['MSG']['TYPE']['OFFLINE'], 'content' => $dedata['toWho']]);
                     $data['server']->push($data['fd'], $res);
