@@ -27,9 +27,10 @@ function sendMsg(type){
   if(type == 3){
 		var userId = parseInt($('#singleCurrentUser').attr('user-id'));
     var text = document.getElementById('singleContent').value;
+    $("#singleContent").val('');
 	}else{
     var userId = '';
-    $("#content").attr("value","");
+    $("#content").val('');
   }
   //向服务器发送数据
   websocket.send(JSON.stringify({
@@ -71,4 +72,5 @@ function cancel() {
 }
 
 function empty(){
+  $('#chat').html('');
 }

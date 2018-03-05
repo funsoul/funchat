@@ -43,10 +43,10 @@
           <div class="chat-container">
             <p class="p">Chat Record</p>
             <ul class="center" id="chat"></ul>
-            <div class="empty"><button onclick="empty()">empty</button></div>
           </div>
 
           <div class="send-container">
+            <div class="empty"><button onclick="empty()">empty</button></div>
             <span id="currentUser"></span>
             <span class="input"><input type="text" id="content" name="content" placeholder="say something..." /></span>
             <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send</button></span>
@@ -67,7 +67,7 @@
 
       <div class="footer">
         <div class="copyright">
-          <a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
+          ©<a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
           <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.0</a>  
         </div>
       </div>
