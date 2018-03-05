@@ -17,7 +17,7 @@
       <div class="content">
         <div class="login-box" id="LoginBox">
           <div class="title">
-            Welcome to FunChat!<span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
+            Welcome to <span style="color: red">Fun</span><span style="color: blue">Chat</span>!<span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
           </div>
           <div class="logInput">
             <span>Account</span>
@@ -33,7 +33,7 @@
         <div id="chatBox" class="chat-box">
 
           <div class="title">
-            FunChat<span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
+            <span style="color: red;font-weight: bold">Fun</span><span style="color: blue">Chat</span><span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
           </div>
           <div class="list-box">
             <p class="p">Online List</p>
