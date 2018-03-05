@@ -61,6 +61,9 @@ function receive(evt) {
     var currentFd = $('#currentUser').attr('fd');
     switch (data.type)
     {
+      case 1:
+        $('#chat').append('<li style="color: pink">' + data.fromWho +' enter the room..</li>');
+        break;
       case 2:
         if(data.fd == currentFd){
           $('#chat').append('<li>'+ data.content + ' : ' + data.fromWho +'</li>');// right

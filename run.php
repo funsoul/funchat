@@ -110,6 +110,9 @@ class WebSocketServer extends WebSocket
             case $this->_constants['MSG']['TYPE']['LOGIN']:
                 $this->respUserList($data);
                 $this->respCurrentFdInfo($data);
+                foreach ($data['depkg'] as $fd => $value){
+                    $data['server']->push($fd, $data['frame']->data);
+                }
                 break;
             case $this->_constants['MSG']['TYPE']['DISPATCH']:
                 $dedata = json_decode($data['frame']->data,true);

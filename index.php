@@ -17,7 +17,7 @@
       <div class="content">
         <div class="login-box" id="LoginBox">
           <div class="title">
-            Welcome to FunChat!
+            Welcome to FunChat!<span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
           </div>
           <div class="logInput">
             <span>Account</span>
@@ -33,7 +33,7 @@
         <div id="chatBox" class="chat-box">
 
           <div class="title">
-            FunChat
+            FunChat<span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
           </div>
           <div class="list-box">
             <p class="p">Online List</p>
@@ -94,13 +94,13 @@
            CLOSED        3    The connection is closed or couldn't be opened.
            */
         if(websocket.readyState == 1) {
+          $('.warning').css('display','none');
           console.log('conn!');
-        }else{
-          usrList.innerHTML = 'no conn!';
         }
       };
       //监听连接关闭
       websocket.onclose = function (evt) {
+        $('.warning').css('display','block');
         console.log("Disconnected");
       };
       //onmessage 监听服务器数据推送
@@ -109,6 +109,7 @@
       };
       //监听连接错误信息
       websocket.onerror = function (evt, e) {
+        $('.warning').css('display','block');
         console.log('Error occured: ' + evt.data);
       };
 
