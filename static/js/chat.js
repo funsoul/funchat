@@ -73,10 +73,10 @@ function receive(evt) {
       case DISPATCH:
         if (data.fd == currentFd) {
           // $('#chat').append('<li>'+ data.content + ' : ' + data.fromWho +'</li>');// right
-          $('#chat').append('<li class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></li>');
+          $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
         } else {
           // $('#chat').append('<li>' + data.fromWho + ' : ' + data.content + '</li>'); // left
-          $('#chat').append('<li class="item-left"><div class="left"><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="left-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div></div></li>');
+          $('#chat').append('<li><div class="item-left"><div class="left"><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="left-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div></div></div></li>');
         }
         break;
       case SINGLE:
