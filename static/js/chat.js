@@ -33,7 +33,7 @@ function login() {
 function sendMsg(type) {
   var text = document.getElementById('content').value;
   var user = $('#currentUser').text();
-  if (type == 3) {
+  if (type == SINGLE) {
     var userId = parseInt($('#singleCurrentUser').attr('user-id'));
     var text = document.getElementById('singleContent').value;
     $("#singleContent").val('');
@@ -72,10 +72,8 @@ function receive(evt) {
         break;
       case DISPATCH:
         if (data.fd == currentFd) {
-          // $('#chat').append('<li>'+ data.content + ' : ' + data.fromWho +'</li>');// right
           $('#chat').append('<li class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></li>');
         } else {
-          // $('#chat').append('<li>' + data.fromWho + ' : ' + data.content + '</li>'); // left
           $('#chat').append('<li class="item-left"><div class="left"><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="left-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div></div></li>');
         }
         break;
