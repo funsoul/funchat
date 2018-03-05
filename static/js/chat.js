@@ -36,6 +36,11 @@ function sendMsg(type) {
   if (type == SINGLE) {
     var userId = parseInt($('#singleCurrentUser').attr('user-id'));
     var text = document.getElementById('singleContent').value;
+    if(text.length > 0){
+      var userName = $('#Account').val();
+      var replyUserText = $('#singleCurrentUser').text();
+      $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + userName + '</div><div class="text">[' + replyUserText + ']' + text + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
+    }
     $("#singleContent").val('');
   } else {
     var userId = '';
