@@ -68,7 +68,7 @@
       <div class="footer">
         <div class="copyright">
           ©<a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
-          <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.0</a>  
+          <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.1</a>
         </div>
       </div>
   </div>
