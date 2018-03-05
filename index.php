@@ -12,54 +12,68 @@
 	</head>
 
 	<body>
-    <div class="content">
+    <div class="container">
+      <div class="main">
+      <div class="content">
+        <div class="login-box" id="LoginBox">
+          <div class="title">
+            Welcome to FunChat!
+          </div>
+          <div class="logInput">
+            <span>Account</span>
+            <span class="inputBox">
+              <input type="text" id="Account" placeholder="please enter a nickname ..."/>
+            </span>
+          </div>
+          <div class="logBtn">
+            <button href="#" id="loginbtn" plain="true" onclick="login()">Log in!</button>
+          </div>
+        </div>
 
-      <div class="login-box" id="LoginBox">
-        <div class="title">
-          Welcome to FunChat!
+        <div id="chatBox" class="chat-box">
+
+          <div class="title">
+            FunChat
+          </div>
+          <div class="list-box">
+            <p class="p">Online List</p>
+            <ul id="userList"></ul>
+          </div>
+
+          <div class="chat-container">
+            <p class="p">Chat Record</p>
+            <ul class="center" id="chat"></ul>
+            <div class="empty"><button onclick="empty()">empty</button></div>
+          </div>
+
+          <div class="send-container">
+            <span id="currentUser"></span>
+            <span class="input"><input type="text" id="content" name="content" placeholder="say something..." /></span>
+            <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send</button></span>
+          </div>
+
         </div>
-        <div class="logInput">
-          <span>Account</span>
-          <span class="inputBox">
-            <input type="text" id="Account" placeholder="please enter a nickname ..."/>
-          </span>
-        </div>
-        <div class="logBtn">
-          <button href="#" id="loginbtn" plain="true" onclick="login()">Log in!</button>
+        <div id="singleChatBox" class="right-box">
+          <div class="single-send-container">
+            <span id="singleCurrentUser" user-id=""></span>
+            <span><input type="text" id="singleContent" name="singleContent" placeholder="say something..." /></span>
+            <span><button id="sendMsg" onclick="sendMsg(3)">send</button></span>
+            <span><button id="cancel" onclick="cancel()">cancel</button></span>
+          </div>
         </div>
       </div>
-
-      <div id="chatBox" class="chat-box">
-
-        <div class="title">
-          FunChat
-        </div>
-        <div class="list-box">
-          <p class="p">Online List</p>
-          <ul id="userList"></ul>
-        </div>
-
-        <div class="chat-container">
-          <p class="p">Chat Record</p>
-          <ul class="center" id="chat"></ul>
-        </div>
-
-        <div class="send-container">
-          <span id="currentUser"></span>
-          <span class="input"><input type="text" id="content" name="content" placeholder="say something..." /></span>
-          <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send</button></span>
-        </div>
-
       </div>
-      <div id="singleChatBox" class="right-box">
-        <div class="single-send-container">
-          <span id="singleCurrentUser" user-id=""></span>
-          <span><input type="text" id="singleContent" name="singleContent" placeholder="say something..." /></span>
-          <span><button id="sendMsg" onclick="sendMsg(3)">send</button></span>
-          <span><button id="cancel" onclick="cancel()">cancel</button></span>
+      
+
+      <div class="footer">
+        <div class="copyright">
+          <a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
+          <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.0</a>  
         </div>
       </div>
-    </div>
+  </div>
+    
+    
     <script>
       <?php
       $websocketConfig = require 'config/server.php';

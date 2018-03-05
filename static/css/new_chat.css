@@ -1,7 +1,16 @@
 @import './reset.css';
 
+.container{
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.main{
+    flex:1;
+}
+
 .content {
-    margin-top: 100px;
     width: 500px;
     border: 1px solid #aaaaaa;
     border-radius: 20px;
@@ -11,6 +20,7 @@
     padding-left: 25px;
     padding-bottom: 30px;
     box-shadow:2px 2px 3px #aaaaaa;
+    /* flex: 1; */
 }
 
 .login-box {
@@ -100,6 +110,7 @@
     border: 1px solid #efefef;
     border-radius: 10px;
     overflow-y: scroll;
+    position: relative;
 }
 
 .chat-box .chat-container #chat{
@@ -114,6 +125,12 @@
 
 .chat-box .chat-container #chat li:nth-child(even){
     color: blue;
+}
+
+.chat-box .chat-container .empty{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .send-container{
@@ -187,8 +204,27 @@
 
 .send-container .right button,
 .right-box .single-send-container #sendMsg,
-.right-box .single-send-container #cancel{
+.right-box .single-send-container #cancel,
+.chat-box .chat-container .empty button{
     background-color: #fff;
     border: 1px solid #aaa;
     border-radius: 2px;
+}
+
+.footer{
+    width: 600px;
+    margin: 0 auto;
+    padding: 30px 0;
+    color: #888;
+    line-height: 1.6;
+    vertical-align: top;
+}
+
+.footer a{
+    color: #888;
+}
+
+.footer .copyright {
+    text-align: center;
+    font-size: 13px;
 }
