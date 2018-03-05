@@ -1,3 +1,10 @@
+const LOGIN = 1;
+const DISPATCH = 2;
+const SINGLE = 3;
+const CLOSE = 4;
+const OFFLINE = 5;
+const FD_INFO = 6;
+
 function reply(v) {
 	var toUserId = v.id;
 	var toUserName = v.innerHTML;
@@ -61,31 +68,31 @@ function receive(evt) {
     var currentFd = $('#currentUser').attr('fd');
     switch (data.type)
     {
-      case 1:
+      case LOGIN:
         $('#chat').append('<li style="color: pink">' + data.fromWho +' enter the room..</li>');
         break;
-      case 2:
+      case DISPATCH:
         if(data.fd == currentFd){
           $('#chat').append('<li>'+ data.content + ' : ' + data.fromWho +'</li>');// right
         }else{
           $('#chat').append('<li>'+ data.fromWho + ' : ' + data.content +'</li>');// left
         }
         break;
-      case 3:
+      case SINGLE:
         if(data.fd == currentFd){
           $('#chat').append('<li style="color: red;">'+ data.content + ' : ' + data.fromWho +'[Private]</li>');// right
         }else{
           $('#chat').append('<li style="color: red;">[Private]'+ data.fromWho + ' : ' + data.content +'</li>'); // left
         }
         break;
-      case 4:
+      case CLOSE:
         $('#chat').append('<li style="color: orange">' + data.content + ' left the room.</li>');
         break;
-      case 5:
+      case OFFLINE:
         var msg = $('#singleCurrentUser').text() + ' [Failed to send : maybe your friend have been offline.]';
         $('#chat').append('<li style="color: blue;">' + msg + '</li>');
         break;
-      case 6:
+      case FD_INFO:
         $('#currentUser').attr('fd',data.fd);
         break;
     }
