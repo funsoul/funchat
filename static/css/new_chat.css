@@ -80,14 +80,15 @@
     height: 260px;
     border: 1px solid #efefef;
     border-radius: 10px;
-    overflow-y: scroll;
+    overflow: scroll;
 }
 
 .chat-box .list-box p,
 .chat-container p{
     font-size: 20px;
     text-align: center;
-    margin: 15px 0 15px 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .chat-box .list-box #userList{
@@ -107,16 +108,24 @@
     border-radius: 10px;
     overflow: scroll;
     position: relative;
+    background-color: rgba(228,225,225,0.5);
+    /* padding-bottom: 30px; */
 }
 
 .chat-box .chat-container #chat{
     font-size: 20px;
-    padding-bottom: 15px;
-    padding-left: 15px;
+    /* padding-bottom: 15px; */
+    /* padding-left: 15px; */
 }
 
 .chat-box .chat-container #chat li{
-    margin: 10px 0 10px 0;
+    margin-bottom: 70px;
+    display: inline-block;
+    width: 300px;
+}
+
+.chat-box .chat-container #chat li::first-child{
+    margin-bottom: 20px;
 }
 
 .chat-box .send-container .empty{
@@ -219,4 +228,108 @@
 .footer .copyright {
     text-align: center;
     font-size: 13px;
+}
+
+
+
+.chat-box .chat-container #chat{
+    padding: 0 20px 20px 20px;
+    position: relative;
+}
+
+
+.item-left .left{
+    display: flex;
+}
+
+.item-left .left .image,
+.item-right .right .image{
+    width: 32px;
+    height: 32px;
+    margin-right: 15px;
+}
+
+.item-left .left .image img,
+.item-right .right .image img{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.item-left .left .left-content{
+    display: flex;
+    flex-direction: column;
+    margin-top: -5px;
+    max-width: 210px;
+}
+
+.item-left .left .left-content .nickname,
+.item-right .right .right-content .nickname{
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.item-left .left .left-content .text{
+    background-color: #fff;
+    font-size: 18px;
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    margin-left: 14px;
+    word-wrap:break-word;
+    border-radius: 5px;
+}
+
+.item-left .left .left-content .text::before{
+    position: absolute;
+    bottom: 0;
+    top: 5px;
+    left: -14px;
+    width: 0;
+    height: 0;
+    content: '';
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-right: 14px solid #fff;
+}
+
+
+.item-right .right{
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+
+.item-right .right .right-content{
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: -5px;
+    max-width: 210px;
+}
+
+.item-right .right .right-content .nickname{
+    text-align: right;
+}
+
+.item-right .right .right-content .text{
+    background-color: #fff;
+    font-size: 18px;
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    word-wrap:break-word;
+    border-radius: 5px;
+}
+
+.item-right .right .right-content .text::after{
+    position: absolute;
+    bottom: 0;
+    top: 5px;
+    right: -14px;
+    width: 0;
+    height: 0;
+    content: '';
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 14px solid #fff;
 }
