@@ -1,80 +1,101 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>FunChat</title>
-		<link rel="stylesheet" type="text/css" href="static/css/new_chat.css" />
-		<script src="static/js/jquery.min.js"></script>
-		<script src="static/js/chat.js"></script>
-	</head>
-
-	<body>
-    <div class="container">
-      <div class="main">
-      <div class="content">
-        <div class="login-box" id="LoginBox">
-          <div class="title">
-            Welcome to <span style="color: #33cc99">Fun</span><span style="color: #ffcc00">Chat</span>!<span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
-          </div>
-          <div class="logInput">
-            <span>Account</span>
-            <span class="inputBox">
-              <input type="text" id="Account" placeholder="please enter a nickname ..."/>
-            </span>
-          </div>
-          <div class="logBtn">
-            <button href="#" id="loginbtn" plain="true" onclick="login()">Log in!</button>
-          </div>
-        </div>
-
-        <div id="chatBox" class="chat-box">
-
-          <div class="title">
-            <span style="color: #33cc99;font-weight: bold">Fun</span><span style="color: #ffcc00">Chat</span><span class="warning" style="color:red;display: none">[The system is being upgraded...]</span>
-          </div>
-          <div class="list-box">
-            <p class="p">Online List</p>
-            <ul id="userList"></ul>
-          </div>
-
-          <div class="chat-container" id="ChatContainer">
-            <p class="p">Chat Record</p>
-            <ul class="center" id="chat"></ul>
-          </div>
-
-          <div class="send-container">
-            <div class="empty"><button onclick="empty()">empty</button></div>
-            <span id="currentUser"></span>
-            <span class="input"><input type="text" id="content" name="content" placeholder="say something..." /></span>
-            <span class="right"><button id="sendMsg" onclick="sendMsg(2)">send</button></span>
-          </div>
-
-        </div>
-        <div id="singleChatBox" class="right-box">
-          <div class="single-send-container">
-            <span id="singleCurrentUser" user-id=""></span>
-            <span><input type="text" id="singleContent" name="singleContent" placeholder="say something..." /></span>
-            <span><button id="sendMsg" onclick="sendMsg(3)">send</button></span>
-            <span><button id="cancel" onclick="cancel()">cancel</button></span>
-          </div>
-        </div>
-      </div>
-      </div>
-      
-
-      <div class="footer">
-        <div class="copyright">
-          ©<a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
-          <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.1</a>
-        </div>
-      </div>
-  </div>
-    
-    
-    <script>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>FunChat</title>
+	<!-- <link rel="stylesheet" type="text/css" href="static/css/new_chat.css" /> -->
+	<link rel="stylesheet" href="static/css/chat.css">
+	<script src="static/js/jquery.min.js"></script>
+	<script src="static/js/chat.js"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="login-container">
+			<div class="login" id="LoginBox">
+				<div class="login-hd">
+					<span class="fun">Fun</span>
+					<span class="chat">Chat</span>
+					<span>!</span>
+				</div>
+				<div class="user-avatar">
+					<img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt="">
+				</div>
+				<div class="user-name">
+					<input type="" name="" placeholder="nickname" id="Account"/>
+				</div>
+				<div class="login-btn">
+					<div class="button" id="loginbtn" onclick="login()">Login</div>
+				</div>
+			</div>
+		</div>
+		<div class="main-container" id="chatBox">
+			<div class="container">
+				<div class="panel">
+					<div class="header">
+						<div  class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div>
+						<div class="nickname" id="currentUser"></div>
+					</div>
+					<div class="usertips">Online List</div>
+					<div class="userList" id="userList">
+						<!-- <div class="user-scope">
+							<div  class="image"><img src="./cat.jpg" alt=""></div>
+							<div class="nickname">Nickname</div>
+						</div> -->
+					</div>
+				</div>
+				<div class="chat-div">
+					<div class="chat-hd">funchat</div>
+					<div class="chat-content" id="chat">
+						<!-- <div class="item">
+							<div class="chat-scope-left">
+								<div class="avatar">
+									<img src="./cat.jpg" alt="">
+								</div>
+								<div class="content">
+									<div class="nickname">nickname</div>
+									<div class="message">这是文本消息</div>
+								</div>
+							</div>
+						</div>
+						<div class="item">
+							<div class="chat-scope-right">
+								<div class="content">
+									<div class="nickname">nickname</div>
+									<div class="message">
+										这是文本消息
+									</div>
+								</div>
+								<div class="avatar">
+									<img src="./cat.jpg" alt="">
+								</div>
+							</div>
+						</div> -->
+					</div>
+					<div class="chat-ft">
+						<div class="toolbar">
+							<img src="./emoji.png" alt="">
+						</div>
+						<div class="input">
+							<textarea placeholder="say something..." id="content" name="content"></textarea>
+						</div>
+						<div class="send">
+							<button type="" id="sendMsg" onclick="sendMsg(2)">发送</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+	        <div class="copyright">
+	          ©<a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
+	          <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.0</a>
+	        </div>
+	    </div>
+	</div>
+	<script>
       <?php
       $websocketConfig = require 'config/server.php';
       $wsServer = 'ws://'.$websocketConfig['WEBSOCKET']['HOST'].':'.$websocketConfig['WEBSOCKET']['PORT'];
@@ -114,6 +135,5 @@
       };
 
     </script>
-	</body>
-
+</body>
 </html>
