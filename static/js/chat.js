@@ -36,7 +36,7 @@ function sendMsg(type) {
   if (type == SINGLE) {
     var userId = parseInt($('#singleCurrentUser').attr('user-id'));
     var text = document.getElementById('singleContent').value;
-    if(text.length > 0){
+    if (text.length > 0) {
       var userName = $('#Account').val();
       var replyUserText = $('#singleCurrentUser').text();
       $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + userName + '</div><div class="text">[' + replyUserText + ']' + text + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
@@ -62,24 +62,29 @@ function sendMsg(type) {
 function receive(evt) {
   if (evt.data) {
     data = JSON.parse(evt.data);
+    console.log("evt.data", evt.data);
+    console.log("data.userList", data.userList);
     if (data.userList) {
       userList.innerHTML = '';
       for (var i = 0; i < data.userList.length; i++) {
         if (data.userList[i].username.length > 1) {
-          userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '">' + data.userList[i].username + '</a></li>';
+          // userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '">' + data.userList[i].username + '</a></li>';
+          userList.innerHTML += '<a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '"><div class="user-scope">' + '<div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
         }
       }
     }
     var currentFd = $('#currentUser').attr('fd');
     switch (data.type) {
       case LOGIN:
-        $('#chat').append('<li style="color: pink;margin-bottom: 20px;">' + data.fromWho + ' enter the room..</li>');
+        $('#chat').append('<divstyle="color: pink;margin-bottom: 20px; text-align:center;">' + data.fromWho + ' enter the room..</div>');
         break;
       case DISPATCH:
         if (data.fd == currentFd) {
-          $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
+          // $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
+          $('#chat').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + data.fromWho + '</div><div class="message">' + data.content + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
         } else {
-          $('#chat').append('<li><div class="item-left"><div class="left"><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="left-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div></div></div></li>');
+          // $('#chat').append('<li><div class="item-left"><div class="left"><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="left-content"><div class="nickname">' + data.fromWho + '</div><div class="text">' + data.content + '</div></div></div></div></li>');
+          $('#chat').append('<div class="item"><div class = "chat-scope-left" ><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class = "content" ><div class="nickname">' + data.fromWho + '</div><div class = "message" >' + data.content + '</div></div></div></div>');
         }
         break;
       case SINGLE:
@@ -90,7 +95,7 @@ function receive(evt) {
         }
         break;
       case CLOSE:
-        $('#chat').append('<li style="color: orange">' + data.content + ' left the room.</li>');
+        $('#chat').append('<div style="color: orange; text-align:center;">' + data.content + ' left the room.</div>');
         break;
       case OFFLINE:
         var msg = $('#singleCurrentUser').text() + ' [Failed to send : maybe your friend have been offline.]';
