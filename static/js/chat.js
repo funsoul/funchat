@@ -6,12 +6,14 @@ const OFFLINE = 5;
 const FD_INFO = 6;
 
 function reply(v) {
-  console.log("v", v.id);
+  var $this = $(v);
+  var nickname = $this.attr('nickname');
   var toUserId = v.id;
-  var toUserName = v.innerHTML;
-  $('#singleChatBox').css('display', 'block');
-  $('#singleCurrentUser').attr('user-id', toUserId);
-  $('#singleCurrentUser').text('Reply: ' + toUserName);
+  $('#group-chat').css('display', 'none');
+  $('#single-chat').css('display', 'block');
+  $('#single-chat-title').text(nickname);
+  $('#single-chat-title').attr('user-id', toUserId);
+  // $('#singleCurrentUser').text('Reply: ' + toUserName);
 }
 
 function login() {
@@ -35,12 +37,13 @@ function sendMsg(type) {
   var text = document.getElementById('content').value;
   var user = $('#currentUser').text();
   if (type == SINGLE) {
-    var userId = parseInt($('#singleCurrentUser').attr('user-id'));
+    var userId = parseInt($('#single-chat-title').attr('user-id'));
+    var userName = $('#single-chat-title').attr('username');
     var text = document.getElementById('singleContent').value;
     if (text.length > 0) {
-      var userName = $('#Account').val();
-      var replyUserText = $('#singleCurrentUser').text();
-      $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + userName + '</div><div class="text">[' + replyUserText + ']' + text + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
+      // $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + userName + '</div><div class="text">[' + replyUserText + ']' + text + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
+      var currentUser = $('#currentUser').text();
+      $('#single-chat-content').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + currentUser + '</div><div class="message">' + text + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
     }
     $("#singleContent").val('');
   } else {
@@ -63,14 +66,13 @@ function sendMsg(type) {
 function receive(evt) {
   if (evt.data) {
     data = JSON.parse(evt.data);
-    console.log("evt.data", evt.data);
     console.log("data.userList", data.userList);
     if (data.userList) {
       userList.innerHTML = '';
       for (var i = 0; i < data.userList.length; i++) {
         if (data.userList[i].username.length > 1) {
           // userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '">' + data.userList[i].username + '</a></li>';
-          userList.innerHTML += '<a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '"><div class="user-scope">' + '<div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
+          userList.innerHTML += '<a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '" ' + 'nickname=' + data.userList[i].username + ' ><div class="user-scope">' + '<div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
         }
       }
     }
@@ -90,9 +92,11 @@ function receive(evt) {
         break;
       case SINGLE:
         if (data.fd == currentFd) {
-          $('#chat').append('<li style="color: red;">' + data.content + ' : ' + data.fromWho + '[Private]</li>'); // right
+          // $('#chat').append('<li style="color: red;">' + data.content + ' : ' + data.fromWho + '[Private]</li>'); // right
+          $('#single-chat-content').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + data.fromWho + '</div><div class="message">' + data.content + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
         } else {
-          $('#chat').append('<li style="color: red;">[Private]' + data.fromWho + ' : ' + data.content + '</li>'); // left
+          // $('#chat').append('<li style="color: red;">[Private]' + data.fromWho + ' : ' + data.content + '</li>'); // left
+          $('#single-chat-content').append('<div class="item"><div class = "chat-scope-left" ><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class = "content" ><div class="nickname">' + data.fromWho + '</div><div class = "message" >' + data.content + '</div></div></div></div>');
         }
         break;
       case CLOSE:
@@ -112,10 +116,6 @@ function receive(evt) {
   }
 }
 
-function cancel() {
-  $("#singleChatBox").css('display', 'none');
-}
-
 function empty() {
   var msg = "Clearing records will not be restored.\n\nReally?";
   if (confirm(msg) == true) {
@@ -124,4 +124,9 @@ function empty() {
   } else {
     return false;
   }
+}
+
+function backToGroup() {
+  $('#group-chat').css('display', 'block');
+  $('#single-chat').css('display', 'none');
 }
