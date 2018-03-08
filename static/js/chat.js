@@ -4,16 +4,46 @@ const SINGLE = 3;
 const CLOSE = 4;
 const OFFLINE = 5;
 const FD_INFO = 6;
+var relationship = [];
+var relationId = [];
 
 function reply(v) {
+  var currId = $('#currentUser').attr('fd')
   var $this = $(v);
   var nickname = $this.attr('nickname');
-  var toUserId = v.id;
-  $('#group-chat').css('display', 'none');
-  $('#single-chat').css('display', 'block');
-  $('#single-chat-title').text(nickname);
-  $('#single-chat-title').attr('user-id', toUserId);
-  // $('#singleCurrentUser').text('Reply: ' + toUserName);
+  var toUserId = $this.attr('id');
+  console.log("v", v);
+  console.log("curr_id", currId);
+  // $('#group-chat').css('display', 'none');
+  // $('#single-chat').css('display', 'block');
+  // $('#single-chat-title').text(nickname);
+  // $('#single-chat-title').attr('user-id', toUserId);
+  if (currId != toUserId) {
+    if ($this.attr('created') != 0) {
+      console.log("不是第一次点击");
+    } else {
+      console.log("是第一次点击");
+      $this.attr('created', 1);
+      let id = currId + toUserId;
+      if (relationId.length == 0) {
+        relationId.push(id);
+      } else {
+        for (let i = 0; i < relationId.length; i++) {
+          let tag = '#' + relationId[i];
+          $(tag).css('display', 'none');
+        }
+      }
+      let title = id + 'title';
+      let content = id + 'content';
+      let singleContent = id + 'singleContent';
+      let sendMsg = id + 'sendMsg';
+      console.log("id", id);
+      $('#group-chat').css('display', 'none');
+      $('#single-chat').append('<div class="chat-div" id=" ' + id + ' "><div class="chat-hd" id=" ' + title + ' "></div><div class="chat-content" id=" ' + content + ' "></div><div class="chat-ft"><div class="toolbar"><div class="emoji"></div><div class="empty" onclick="empty()">清空消息</div></div><div class="input"><textarea placeholder="say something..." type="text" id=" ' + singleContent + ' " name="singleContent" placeholder="say something..." /></textarea></div><div class="send"><div class="button" id=" ' + sendMsg + ' " onclick="sendMsg(3)">发送</div></div></div></div>');
+    }
+  } else {
+    console.log("my");
+  }
 }
 
 function login() {
@@ -41,7 +71,6 @@ function sendMsg(type) {
     var userName = $('#single-chat-title').attr('username');
     var text = document.getElementById('singleContent').value;
     if (text.length > 0) {
-      // $('#chat').append('<li><div class="item-right"><div class="right"><div class="right-content"><div class="nickname">' + userName + '</div><div class="text">[' + replyUserText + ']' + text + '</div></div><div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div></li>');
       var currentUser = $('#currentUser').text();
       $('#single-chat-content').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + currentUser + '</div><div class="message">' + text + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
     }
@@ -71,8 +100,7 @@ function receive(evt) {
       userList.innerHTML = '';
       for (var i = 0; i < data.userList.length; i++) {
         if (data.userList[i].username.length > 1) {
-          // userList.innerHTML += '<li><a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '">' + data.userList[i].username + '</a></li>';
-          userList.innerHTML += '<a href="#" onclick="reply(this)" id="' + data.userList[i].fd + '" ' + 'nickname=' + data.userList[i].username + ' ><div class="user-scope">' + '<div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
+          userList.innerHTML += '<a href="#" onclick="reply(this)" created="0" id="' + data.userList[i].fd + '" ' + 'nickname=' + data.userList[i].username + ' ><div class="user-scope">' + '<div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
         }
       }
     }
@@ -92,10 +120,8 @@ function receive(evt) {
         break;
       case SINGLE:
         if (data.fd == currentFd) {
-          // $('#chat').append('<li style="color: red;">' + data.content + ' : ' + data.fromWho + '[Private]</li>'); // right
           $('#single-chat-content').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + data.fromWho + '</div><div class="message">' + data.content + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
         } else {
-          // $('#chat').append('<li style="color: red;">[Private]' + data.fromWho + ' : ' + data.content + '</li>'); // left
           $('#single-chat-content').append('<div class="item"><div class = "chat-scope-left" ><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class = "content" ><div class="nickname">' + data.fromWho + '</div><div class = "message" >' + data.content + '</div></div></div></div>');
         }
         break;

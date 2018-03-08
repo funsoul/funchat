@@ -6,7 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title>FunChat</title>
-	<!-- <link rel="stylesheet" type="text/css" href="static/css/new_chat.css" /> -->
 	<link rel="stylesheet" href="static/css/chat.css">
 	<script src="static/js/jquery.min.js"></script>
 	<script src="static/js/chat.js"></script>
@@ -39,41 +38,11 @@
 						<div class="nickname" id="currentUser"></div>
 					</div>
 					<div class="group-name" onclick="backToGroup()">FunChat</div>
-					<div class="userList" id="userList">
-						<!-- <div class="user-scope">
-							<div  class="image"><img src="./cat.jpg" alt=""></div>
-							<div class="nickname">Nickname</div>
-						</div> -->
-					</div>
+					<div class="userList" id="userList"></div>
 				</div>
 				<div class="chat-div" id="group-chat">
 					<div class="chat-hd" id="group-chat-title">FunChat</div>
-					<div class="chat-content" id="chat">
-						<!-- <div class="item">
-							<div class="chat-scope-left">
-								<div class="avatar">
-									<img src="./cat.jpg" alt="">
-								</div>
-								<div class="content">
-									<div class="nickname">nickname</div>
-									<div class="message">这是文本消息</div>
-								</div>
-							</div>
-						</div>
-						<div class="item">
-							<div class="chat-scope-right">
-								<div class="content">
-									<div class="nickname">nickname</div>
-									<div class="message">
-										这是文本消息
-									</div>
-								</div>
-								<div class="avatar">
-									<img src="./cat.jpg" alt="">
-								</div>
-							</div>
-						</div> -->
-					</div>
+					<div class="chat-content" id="chat"></div>
 					<div class="chat-ft">
 						<div class="toolbar">
 							<div class="emoji">
@@ -85,20 +54,16 @@
 							<textarea placeholder="say something..." id="content" name="content"></textarea>
 						</div>
 						<div class="send">
-							<!-- <button type="" id="sendMsg" onclick="sendMsg(2)">发送</button> -->
 							<div class="button" id="sendMsg" onclick="sendMsg(2)">发送</div>
 						</div>
 					</div>
 				</div>
-				<div class="chat-div" id="single-chat">
+				<!-- <div class="chat-div" id="single-chat">
 					<div class="chat-hd" id="single-chat-title"></div>
-					<div class="chat-content" id="single-chat-content">
-					</div>
+					<div class="chat-content" id="single-chat-content"></div>
 					<div class="chat-ft">
 						<div class="toolbar">
-							<div class="emoji">
-								<!-- <img src="http://bpic.588ku.com/element_origin_min_pic/00/93/91/4056f2b13a70c32.jpg" alt=""> -->
-							</div>
+							<div class="emoji"></div>
 							<div class="empty" onclick="empty()">清空消息</div>
 						</div>
 						<div class="input">
@@ -108,7 +73,8 @@
 							<div class="button" id="sendMsg" onclick="sendMsg(3)">发送</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
+				<div id="single-chat"></div>
 			</div>
 		</div>
 		<div class="footer">
