@@ -4,45 +4,32 @@ const SINGLE = 3;
 const CLOSE = 4;
 const OFFLINE = 5;
 const FD_INFO = 6;
-var relationship = [];
-var relationId = [];
+var toUserId = '';
+
 
 function reply(v) {
   var currId = $('#currentUser').attr('fd')
   var $this = $(v);
   var nickname = $this.attr('nickname');
-  var toUserId = $this.attr('id');
-  console.log("v", v);
-  console.log("curr_id", currId);
-  // $('#group-chat').css('display', 'none');
-  // $('#single-chat').css('display', 'block');
-  // $('#single-chat-title').text(nickname);
-  // $('#single-chat-title').attr('user-id', toUserId);
+  toUserId = $this.attr('id');
   if (currId != toUserId) {
+    let id = currId + toUserId;
+    let title = id + 'title';
+    let content = id + 'content';
+    let singleContent = id + 'singleContent';
     if ($this.attr('created') != 0) {
-      console.log("不是第一次点击");
-    } else {
-      console.log("是第一次点击");
-      $this.attr('created', 1);
-      let id = currId + toUserId;
-      if (relationId.length == 0) {
-        relationId.push(id);
-      } else {
-        for (let i = 0; i < relationId.length; i++) {
-          let tag = '#' + relationId[i];
-          $(tag).css('display', 'none');
-        }
-      }
-      let title = id + 'title';
-      let content = id + 'content';
-      let singleContent = id + 'singleContent';
-      let sendMsg = id + 'sendMsg';
-      console.log("id", id);
+      let tag = '#' + id;
       $('#group-chat').css('display', 'none');
-      $('#single-chat').append('<div class="chat-div" id=" ' + id + ' "><div class="chat-hd" id=" ' + title + ' "></div><div class="chat-content" id=" ' + content + ' "></div><div class="chat-ft"><div class="toolbar"><div class="emoji"></div><div class="empty" onclick="empty()">清空消息</div></div><div class="input"><textarea placeholder="say something..." type="text" id=" ' + singleContent + ' " name="singleContent" placeholder="say something..." /></textarea></div><div class="send"><div class="button" id=" ' + sendMsg + ' " onclick="sendMsg(3)">发送</div></div></div></div>');
+      $('#container').children(".chat-div").css("display", "none");
+      $(tag).css('display','block');
+    } else {
+      $this.attr('created', 1);
+      $('#group-chat').css('display', 'none');
+      $('#container').children(".chat-div").css("display", "none");
+      $('#container').append('<div class="chat-div" id="' + id + '"><div class="chat-hd" id="' + title + '">'+ nickname +'</div><div class="chat-content" id="' + content + '"></div><div class="chat-ft"><div class="toolbar"><div class="emoji"></div><div class="empty" onclick="empty()">清空消息</div></div><div class="input"><textarea placeholder="say something..." type="text" id="' + singleContent + '" name="singleContent" placeholder="say something..." /></textarea></div><div class="send"><div class="single-chat-button" id="single-chat-button" toUserId="' + toUserId + '" '+ 'content="'+ content +'" onclick="sendMsg(3)">发送</div></div></div></div>');
     }
   } else {
-    console.log("my");
+    console.log("myself");
   }
 }
 
@@ -67,14 +54,15 @@ function sendMsg(type) {
   var text = document.getElementById('content').value;
   var user = $('#currentUser').text();
   if (type == SINGLE) {
-    var userId = parseInt($('#single-chat-title').attr('user-id'));
-    var userName = $('#single-chat-title').attr('username');
-    var text = document.getElementById('singleContent').value;
+    var curr_id =  $('#currentUser').attr('fd');
+    var singleContent = '#' + curr_id + toUserId + 'singleContent';
+    var content = '#' + curr_id + toUserId + 'content';
+    var text = $(singleContent).val();
     if (text.length > 0) {
       var currentUser = $('#currentUser').text();
-      $('#single-chat-content').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + currentUser + '</div><div class="message">' + text + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
+      $(content).append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + currentUser + '</div><div class="message">' + text + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
     }
-    $("#singleContent").val('');
+    $(singleContent).val('');
   } else {
     var userId = '';
     $("#content").val('');
@@ -87,15 +75,16 @@ function sendMsg(type) {
   websocket.send(JSON.stringify({
     type: type,
     fromWho: user,
-    toWho: userId,
+    toWho: toUserId,
     content: text
   }));
 }
 
 function receive(evt) {
+  console.log('evt',evt);
   if (evt.data) {
     data = JSON.parse(evt.data);
-    console.log("data.userList", data.userList);
+    var currentFd = $('#currentUser').attr('fd');
     if (data.userList) {
       userList.innerHTML = '';
       for (var i = 0; i < data.userList.length; i++) {
@@ -104,7 +93,7 @@ function receive(evt) {
         }
       }
     }
-    var currentFd = $('#currentUser').attr('fd');
+    
     switch (data.type) {
       case LOGIN:
         $('#chat').append('<div class="item"><div class="enter-status">' + data.fromWho + ' enter the room..</div></div>');
@@ -119,10 +108,19 @@ function receive(evt) {
         }
         break;
       case SINGLE:
+        let id = data.toWho + data.fd;
+        let title = id + 'title';
+        let content = id + 'content';
+        let singleContent = id + 'singleContent';
+        $('#container').append('<div class="chat-div" style="display:none;" id="' + id + '"><div class="chat-hd" id="' + title + '">'+ data.fromWho +'</div><div class="chat-content" id="' + content + '"></div><div class="chat-ft"><div class="toolbar"><div class="emoji"></div><div class="empty" onclick="empty()">清空消息</div></div><div class="input"><textarea placeholder="say something..." type="text" id="' + singleContent + '" name="singleContent" placeholder="say something..." /></textarea></div><div class="send"><div class="single-chat-button" id="single-chat-button" toUserId="' + toUserId + '" '+ 'content="'+ content +'" onclick="sendMsg(3)">发送</div></div></div></div>');
+        var sendId = '#'+ data.fd;
+        $(sendId).attr('created',1);
         if (data.fd == currentFd) {
-          $('#single-chat-content').append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + data.fromWho + '</div><div class="message">' + data.content + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
+          var sendContent = '#'+content;
+          $(sendContent).append('<div class="item"><div class="chat-scope-right"><div class="content"><div class="nickname">' + data.fromWho + '</div><div class="message">' + data.content + '</div></div><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div></div></div>');
         } else {
-          $('#single-chat-content').append('<div class="item"><div class = "chat-scope-left" ><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class = "content" ><div class="nickname">' + data.fromWho + '</div><div class = "message" >' + data.content + '</div></div></div></div>');
+          var sendContent = '#'+content;
+          $(sendContent).append('<div class="item"><div class = "chat-scope-left" ><div class="avatar"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class = "content" ><div class="nickname">' + data.fromWho + '</div><div class = "message" >' + data.content + '</div></div></div></div>');
         }
         break;
       case CLOSE:
@@ -136,7 +134,6 @@ function receive(evt) {
         $('#currentUser').attr('fd', data.fd);
         break;
     }
-    console.log(data);
     var chatDiv = document.getElementById('chat');
     chatDiv.scrollTop = chatDiv.scrollHeight;
   }
@@ -153,6 +150,6 @@ function empty() {
 }
 
 function backToGroup() {
+  $('#container').children(".chat-div").css("display", "none");
   $('#group-chat').css('display', 'block');
-  $('#single-chat').css('display', 'none');
 }

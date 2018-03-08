@@ -31,7 +31,7 @@
 			</div>
 		</div>
 		<div class="main-container" id="chatBox">
-			<div class="container">
+			<div class="container" id="container">
 				<div class="panel">
 					<div class="header">
 						<div  class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div>
@@ -54,27 +54,10 @@
 							<textarea placeholder="say something..." id="content" name="content"></textarea>
 						</div>
 						<div class="send">
-							<div class="button" id="sendMsg" onclick="sendMsg(2)">发送</div>
+							<div class="single-chat-button" id="sendMsg" onclick="sendMsg(2)">发送</div>
 						</div>
 					</div>
 				</div>
-				<!-- <div class="chat-div" id="single-chat">
-					<div class="chat-hd" id="single-chat-title"></div>
-					<div class="chat-content" id="single-chat-content"></div>
-					<div class="chat-ft">
-						<div class="toolbar">
-							<div class="emoji"></div>
-							<div class="empty" onclick="empty()">清空消息</div>
-						</div>
-						<div class="input">
-							<textarea placeholder="say something..." type="text" id="singleContent" name="singleContent" placeholder="say something..." /></textarea>
-						</div>
-						<div class="send">
-							<div class="button" id="sendMsg" onclick="sendMsg(3)">发送</div>
-						</div>
-					</div>
-				</div> -->
-				<div id="single-chat"></div>
 			</div>
 		</div>
 		<div class="footer">

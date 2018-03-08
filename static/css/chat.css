@@ -367,7 +367,7 @@ body{
 	position: relative;
 }
 
-.container .chat-div .chat-ft .send .button{
+.container .chat-div .chat-ft .send .single-chat-button{
 	width: 90px;
 	height: 30px;
 	line-height: 30px;
