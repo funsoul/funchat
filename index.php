@@ -38,8 +38,7 @@
 						<div  class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div>
 						<div class="nickname" id="currentUser"></div>
 					</div>
-					<div class="group-name">FunChat</div>
-					<div class="usertips">在线</div>
+					<div class="group-name" onclick="backToGroup()">FunChat</div>
 					<div class="userList" id="userList">
 						<!-- <div class="user-scope">
 							<div  class="image"><img src="./cat.jpg" alt=""></div>
@@ -47,8 +46,8 @@
 						</div> -->
 					</div>
 				</div>
-				<div class="chat-div">
-					<div class="chat-hd">funchat</div>
+				<div class="chat-div" id="group-chat">
+					<div class="chat-hd" id="group-chat-title">FunChat</div>
 					<div class="chat-content" id="chat">
 						<!-- <div class="item">
 							<div class="chat-scope-left">
@@ -78,7 +77,7 @@
 					<div class="chat-ft">
 						<div class="toolbar">
 							<div class="emoji">
-								<img src="http://bpic.588ku.com/element_origin_min_pic/00/93/91/4056f2b13a70c32.jpg" alt="">
+								<!-- <img src="http://bpic.588ku.com/element_origin_min_pic/00/93/91/4056f2b13a70c32.jpg" alt=""> -->
 							</div>
 							<div class="empty" onclick="empty()">清空消息</div>
 						</div>
@@ -88,6 +87,25 @@
 						<div class="send">
 							<!-- <button type="" id="sendMsg" onclick="sendMsg(2)">发送</button> -->
 							<div class="button" id="sendMsg" onclick="sendMsg(2)">发送</div>
+						</div>
+					</div>
+				</div>
+				<div class="chat-div" id="single-chat">
+					<div class="chat-hd" id="single-chat-title"></div>
+					<div class="chat-content" id="single-chat-content">
+					</div>
+					<div class="chat-ft">
+						<div class="toolbar">
+							<div class="emoji">
+								<!-- <img src="http://bpic.588ku.com/element_origin_min_pic/00/93/91/4056f2b13a70c32.jpg" alt=""> -->
+							</div>
+							<div class="empty" onclick="empty()">清空消息</div>
+						</div>
+						<div class="input">
+							<textarea placeholder="say something..." type="text" id="singleContent" name="singleContent" placeholder="say something..." /></textarea>
+						</div>
+						<div class="send">
+							<div class="button" id="sendMsg" onclick="sendMsg(3)">发送</div>
 						</div>
 					</div>
 				</div>
