@@ -38,7 +38,8 @@
 						<div  class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div>
 						<div class="nickname" id="currentUser"></div>
 					</div>
-					<div class="usertips">Online List</div>
+					<div class="usertips group">FunChat</div>
+					<div class="usertips">在线</div>
 					<div class="userList" id="userList">
 						<!-- <div class="user-scope">
 							<div  class="image"><img src="./cat.jpg" alt=""></div>
