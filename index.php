@@ -96,7 +96,6 @@
 	        </div>
 	    </div>
 	</div>
-
 	<script>
       <?php
       $websocketConfig = require 'config/server.php';
