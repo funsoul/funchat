@@ -38,7 +38,8 @@
 						<div  class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div>
 						<div class="nickname" id="currentUser"></div>
 					</div>
-					<div class="usertips">Online List</div>
+					<div class="group-name">FunChat</div>
+					<div class="usertips">在线</div>
 					<div class="userList" id="userList">
 						<!-- <div class="user-scope">
 							<div  class="image"><img src="./cat.jpg" alt=""></div>
@@ -76,13 +77,17 @@
 					</div>
 					<div class="chat-ft">
 						<div class="toolbar">
-							<img src="./emoji.png" alt="">
+							<div class="emoji">
+								<img src="http://bpic.588ku.com/element_origin_min_pic/00/93/91/4056f2b13a70c32.jpg" alt="">
+							</div>
+							<div class="empty" onclick="empty()">清空消息</div>
 						</div>
 						<div class="input">
 							<textarea placeholder="say something..." id="content" name="content"></textarea>
 						</div>
 						<div class="send">
-							<button type="" id="sendMsg" onclick="sendMsg(2)">发送</button>
+							<!-- <button type="" id="sendMsg" onclick="sendMsg(2)">发送</button> -->
+							<div class="button" id="sendMsg" onclick="sendMsg(2)">发送</div>
 						</div>
 					</div>
 				</div>
@@ -91,7 +96,7 @@
 		<div class="footer">
 	        <div class="copyright">
 	          ©<a href="http://www.funsoul.org/">funsoul.org</a> 2018 备案号：粤ICP备17095160号  | 开发者<a href="http://www.funsoul.org">funsoul</a>
-	          <a href="http://www.fogcrane.org/">fogcrane</a>| 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.0</a>
+	          <a href="http://www.fogcrane.org/">fogcrane</a> | 当前版本 <a href="https://github.com/funsoul/funchat/releases/tag/1.0">funchat-1.0</a>
 	        </div>
 	    </div>
 	</div>
