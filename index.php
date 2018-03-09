@@ -18,13 +18,12 @@
 				<div class="login-hd">
 					<span class="fun">Fun</span>
 					<span class="chat">Chat</span>
-					<span>!</span>
 				</div>
 				<div class="user-avatar">
 					<img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt="">
 				</div>
 				<div class="user-name">
-					<input type="" name="" placeholder="nickname" id="Account"/>
+					<input type="" name="" placeholder="Enter your nickname" id="Account"/>
 				</div>
 				<div class="login-btn">
 					<div class="button" id="loginbtn" onclick="login()">Login</div>
@@ -38,7 +37,7 @@
 						<div  class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div>
 						<div class="nickname" id="currentUser"></div>
 					</div>
-					<div class="group-name" onclick="backToGroup()">FunChat</div>
+					<div class="group-name" onclick="backToGroup()" id="group-name">FunChat</div>
 					<div class="userList" id="userList"></div>
 				</div>
 				<div class="chat-div" id="group-chat">
@@ -49,7 +48,7 @@
 							<div class="emoji">
 								<!-- <img src="http://bpic.588ku.com/element_origin_min_pic/00/93/91/4056f2b13a70c32.jpg" alt=""> -->
 							</div>
-							<div class="empty" onclick="empty()">清空消息</div>
+							<div class="empty" onclick="empty()">清空</div>
 						</div>
 						<div class="input">
 							<textarea placeholder="say something..." id="content" name="content"></textarea>
