@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 	<title>FunChat</title>
 	<link rel="stylesheet" href="static/css/chat.css">
+	<script src="static/js/main.js" type="text/javascript" charset="utf-8"></script>
 	<script src="static/js/jquery.min.js"></script>
 	<script src="static/js/chat.js"></script>
 </head>
