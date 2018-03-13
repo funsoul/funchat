@@ -16,10 +16,9 @@ function reply(v) {
   if (currId != toUserId) {
 
     if (call == 1) {
-      $this.children(".user-scope").children(":last").css("color", "#fff").css("font-size", "0.16rem");;
+      $this.children(".user-scope").children(":first").children("#point").css('display', 'none');
       $this.attr('call', 0);
     }
-
     $('#group-name').css("background-color", "#2e3238");
     $this.siblings().children().css("background-color", "#2e3238");
     $this.children('#userList-item').css("background-color", "#2e3641");
@@ -99,7 +98,7 @@ function receive(evt) {
       userList.innerHTML = '';
       for (var i = 0; i < data.userList.length; i++) {
         if (data.userList[i].username.length > 1) {
-          userList.innerHTML += '<a href="#" onclick="reply(this)" created="0" id="' + data.userList[i].fd + '" ' + 'nickname=' + data.userList[i].username + ' ><div class="user-scope" id="userList-item">' + '<div class="image"><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
+          userList.innerHTML += '<a href="#" onclick="reply(this)" created="0" id="' + data.userList[i].fd + '" ' + 'nickname=' + data.userList[i].username + ' ><div class="user-scope" id="userList-item">' + '<div class="image"><div class="point" id="point"></div><img src="http://n.sinaimg.cn/translate/w1280h1280/20171211/hsEC-fypnsip6872500.jpg" alt=""></div><div class="nickname">' + data.userList[i].username + '</div></div></a>';
         }
       }
     }
@@ -134,26 +133,17 @@ function receive(evt) {
         }
         //显示未读
         var who = data.fromWho;
-        console.log("who", who)
         var a = $('#userList').children();
         var b = a[0].attributes.nickname;
-        console.log("a", a);
-        console.log("b", b);
         for (let i = 0; i < a.length; i++) {
-
-          console.log("whefffff", who);
           var nickname = a[i].attributes.nickname.value;
-          console.log("a[i].attributes.nickname", a[i].attributes.nickname.value);
           if (nickname == who) {
             let id = '#' + a[i].attributes.id.value;
             console.log("id", id);
-            // $(id).attr('call', 'hhhhh');
-            // console.log("info");
             $(id).attr('call', 1);
-            $(id).children(".user-scope").children(":last").css("color", "red").css("font-size", "20px");
+            $(id).children(".user-scope").children(":first").children("#point").css('display', 'block');
           }
         }
-
         break;
       case CLOSE:
         $('#chat').append('<div class="item"><div class="left-status">' + data.content + ' left the room.</div></div>');

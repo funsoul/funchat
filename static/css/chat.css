@@ -17,17 +17,17 @@ body{
 }
 
 .login{
-	width: 2.8rem;
-	height: 3.47rem;
+	width: 280px;
+	height: 347px;
 	background-color: #eee;
-	margin: 2rem auto;
-	border-radius: 0.05rem;
-	padding-top: 0.25rem;
+	margin: 200px auto;
+	border-radius: 5px;
+	padding-top: 25px;
 }
 
 .login .login-hd{
-	font-size: 0.32rem;
-	margin-bottom: 0.1rem;
+	font-size: 32px;
+	margin-bottom: 10px;
 	text-align: center;
 }
 
@@ -37,24 +37,24 @@ body{
 
 .login .login-hd .chat{
 	color: #ffcc00;
-	margin-left: -0.08rem;
+	margin-left: -8px;
 }
 
 .login .user-avatar{
-	margin: 0.35rem auto 0.30rem;
+	margin: 35px auto 30px;
 }
 
 .login .user-avatar,
 .login .user-avatar img{
-	width: 0.90rem;
-	height: 0.90rem;
-	border-radius: 0.05rem;
+	width: 90px;
+	height: 90px;
+	border-radius: 5px;
 }
 
 .login .user-name,
 .login .user-name input{
-	width: 2.1rem;
-	font-size: 0.22rem;
+	width: 210px;
+	font-size: 22px;
 	margin: 0 auto;
 	border: none;
 	background-color: transparent;
@@ -70,19 +70,19 @@ body{
 }
 
 .login .login-btn{
-	margin: 0.2rem auto;
-	font-size: 0.22rem;
+	margin: 20px auto;
+	font-size: 22px;
 	text-align: center;
 	background-color: #1aad19;
 	color: #fff;
-	border-radius: 0.05rem;
+	border-radius: 5px;
 }
 
 .login .login-btn,
 .login .login-btn .button{
-	width: 2.1rem;
-	height: 0.4rem;
-	line-height: 0.40rem;
+	width: 210px;
+	height: 40px;
+	line-height: 40px;
 }
 
 /* ==================================== */
@@ -158,8 +158,22 @@ body{
 
 .container .panel .userList .user-scope .image,
 .container .panel .userList .user-scope .image img{
+	position: relative;
 	width: 0.4rem;
 	height: 0.4rem;
+}
+
+.container .panel .userList .user-scope .image .point{
+	width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    content: '';
+    z-index: 999;
+    display: none;
 }
 
 .container .panel .header .image,
